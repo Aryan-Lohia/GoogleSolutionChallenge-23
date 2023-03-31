@@ -23,7 +23,7 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen> {
     final places = GoogleMapsPlaces(apiKey: 'AIzaSyBAcjxEiRdrBUZ7DF5LDSO5ebUYWatFahE');
 
     final response = await places.searchNearbyWithRadius(
-        Location(lat: 26.732311, lng: 88.410286), 30,
+        Location(lat: 27.1819736, lng: 88.5033075), 30,
         type: "pharmacies");
 
     if (response.status == "OK") {
@@ -84,6 +84,7 @@ class _NearbyPlacesScreenState extends State<NearbyPlacesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orangeAccent,
         title: Text('Nearby Places'),
       ),
       body: GoogleMap(

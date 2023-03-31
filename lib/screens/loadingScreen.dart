@@ -24,8 +24,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   static List<dynamic> excelList = [];
 
   process() async {
-    //String parsed=await googleApi(widget.imagePath);
-    String parsed="calpol crocin";
+    String parsed=await googleApi(widget.imagePath);
     await searchExcel(parsed);
 
   }
@@ -113,38 +112,5 @@ class _LoadingScreenState extends State<LoadingScreen> {
         ),
       ),
     );
-
-    //   return FutureBuilder(
-    //     future: googleApi(),
-    //     builder:(context,snap){
-    //       if(snap.connectionState==ConnectionState.waiting)
-    //       return Scaffold(
-    //       backgroundColor: Colors.orangeAccent,
-    //       body: Center(child: Container(
-    //         decoration: BoxDecoration(
-    //           borderRadius: BorderRadius.circular(30)
-    //         ),
-    //         height: MediaQuery
-    //             .of(context)
-    //             .size
-    //             .height / 3,
-    //         width: MediaQuery
-    //             .of(context)
-    //             .size
-    //             .width / 1.3,
-    //         color: Colors.white,
-    //         child:Column(
-    //           children: [
-    //             CircularProgressIndicator(),
-    //             SizedBox(height: 20,),
-    //             Text("Processing your Prescription"),
-    //           ],
-    //         ),
-    //       ),),
-    //     );
-    //     else{
-    //       return PrescriptionScreen(image:widget.imagePath!,meds:snap.data);
-    //       }}
-    //   );
   }
 }

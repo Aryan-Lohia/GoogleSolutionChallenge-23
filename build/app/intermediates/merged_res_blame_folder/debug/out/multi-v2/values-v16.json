@@ -4,7 +4,7 @@
             "outputFile": "com.medbay.app-mergeDebugResources-29:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\USER\\.gradle\\caches\\transforms-3\\9008b2a9fb01102d26fd2f78c055a96b\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Acer\\.gradle\\caches\\transforms-3\\9008b2a9fb01102d26fd2f78c055a96b\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\USER\\.gradle\\caches\\transforms-3\\7d79b99ec9cc793464994b67f64f6148\\transformed\\appcompat-1.3.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Acer\\.gradle\\caches\\transforms-3\\7d79b99ec9cc793464994b67f64f6148\\transformed\\appcompat-1.3.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

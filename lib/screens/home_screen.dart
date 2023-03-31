@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
            padding: const EdgeInsets.all(16.0),
             child: InkWell(
-               onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>NearbyPlacesScreen(initialPosition: const LatLng(26.732311,88.410286), Latlng: null,)));},
+               onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>NearbyPlacesScreen(initialPosition: const LatLng(26.732311,50.890541), Latlng: null,)));},
                child: Container(
                  height: 170,
                  width: MediaQuery.of(context).size.width/2-20,
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  child: Center(child: Column(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: [
-                     Icon(Icons.upload),
+                     Icon(Icons.add_location),
                      SizedBox(height: 10,),
                      Text(
                        "Check your Nearby Stores",style: Styles.headlineStyle3.copyWith(color: Colors.black),

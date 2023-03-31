@@ -74,7 +74,7 @@ class _ChatAIState extends State<ChatAI> {
   void initState() {
     super.initState();
     openAI = OpenAI.instance.build(
-        token: "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",
+        token: "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",
         baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
         isLog: true);
   }

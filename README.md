@@ -14,4 +14,8 @@
 
 6.	Set up an emulator or connect a physical device: You can use an emulator to run the app or connect a physical device. To set up an emulator, open Android Studio and select AVD Manager from the Tools menu. Follow the prompts to create and start an emulator. To connect a physical device, follow the instructions provided by your device manufacturer.
 
-7.	Run the app: To run the app, open a terminal or command prompt and navigate to your project directory. Run the command flutter run. If you're using an emulator or physical device, make sure it's connected and recognized by Flutter.
+7. Setup an OpenAI account and generate an API key. Paste the API key in the chatAi.dart file in lib>screens.
+   Setup a Cloud Vision API and generate an auth.json credentials file and put it in the assests folder.
+   Setup a Google Maps API account and generate an API key. Then place the API key in the nearbyplaces.dart file in lib>screens.
+
+8.	Run the app: To run the app, open a terminal or command prompt and navigate to your project directory. Run the command flutter run. If you're using an emulator or physical device, make sure it's connected and recognized by Flutter.

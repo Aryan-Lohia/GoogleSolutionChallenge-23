@@ -1,112 +1,97 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
+import 'package:google_maps_webservice/places.dart';
 
+class NearbyPlacesScreen extends StatefulWidget {
+  final LatLng initialPosition;
 
+  NearbyPlacesScreen({required this.initialPosition, required Latlng});
 
-class MedicineShopLocator extends StatefulWidget {
   @override
-  _MedicineShopLocatorState createState() => _MedicineShopLocatorState();
+  _NearbyPlacesScreenState createState() => _NearbyPlacesScreenState();
 }
 
-class _MedicineShopLocatorState extends State<MedicineShopLocator> {
+class _NearbyPlacesScreenState extends State<NearbyPlacesScreen> {
   late GoogleMapController _mapController;
-  Location _location = Location();
-  late LatLng _currentLocation;
-  Set<Marker> _markers = {};
+  List<Marker> _markers = [];
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+  }
+
+  void _searchNearbyPlaces(LatLng location) async {
+    final places = GoogleMapsPlaces(apiKey: 'AIzaSyBAcjxEiRdrBUZ7DF5LDSO5ebUYWatFahE');
+
+    final response = await places.searchNearbyWithRadius(
+        Location(lat: 26.732311, lng: 88.410286), 30,
+        type: "pharmacies");
+
+    if (response.status == "OK") {
+      final places = response.results;
+
+      setState(() {
+        _markers.clear();
+        _markers = places
+            .map((place) => Marker(
+          markerId: MarkerId(place.id!),
+          position: LatLng(
+              place.geometry!.location.lat ?? 0,
+              place.geometry!.location.lng ?? 0),
+          infoWindow: InfoWindow(title: place.name!),
+        ))
+            .toList();
+      });
+
+      final bounds = _calculateBounds(_markers);
+      _mapController.animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
+    }
+  }
+
+  LatLngBounds _calculateBounds(List<Marker> markers) {
+    double minLat = markers[0].position.latitude;
+    double maxLat = markers[0].position.latitude;
+    double minLng = markers[0].position.longitude;
+    double maxLng = markers[0].position.longitude;
+
+    for (final marker in markers) {
+      if (marker.position.latitude < minLat) {
+        minLat = marker.position.latitude;
+      }
+      if (marker.position.latitude > maxLat) {
+        maxLat = marker.position.latitude;
+      }
+      if (marker.position.longitude < minLng) {
+        minLng = marker.position.longitude;
+      }
+      if (marker.position.longitude > maxLng) {
+        maxLng = marker.position.longitude;
+      }
+    }
+
+    return LatLngBounds(
+      southwest: LatLng(minLat, minLng),
+      northeast: LatLng(maxLat, maxLng),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
-  }
-
-  Future<void> _getCurrentLocation() async {
-    try {
-      LocationData locationData = await _location.getLocation();
-      _currentLocation =
-          LatLng(locationData.latitude!, locationData.longitude!);
-      _moveCamera();
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _moveCamera() {
-    _mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: _currentLocation, zoom: 15)));
-
-  }
-
-  Future<void> _searchNearbyMedicineShops() async {
-    String url =
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${_currentLocation.latitude},${_currentLocation.longitude}&radius=50&type=pharmacy&key=AIzaSyBAcjxEiRdrBUZ7DF5LDSO5ebUYWatFahE';
-    var response = await http.get(Uri.parse(url));
-    _mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: _currentLocation, zoom: 15)));
-    /*var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult != ConnectivityResult.mobile &&
-        connectivityResult != ConnectivityResult.wifi) {
-      print('No internet connection');
-      return;
-    }*/
-
-    var jsonResponse = jsonDecode(response.body);
-    List<dynamic> results = jsonResponse['results'];
-    _addMarkers(results);
-  }
-
-  void _addMarkers(List<dynamic> places) {
-    places.forEach((place) {
-      double lat = place['geometry']['location']['lat'];
-      double lng = place['geometry']['location']['lng'];
-      String name = place['name'];
-      String address = place['vicinity'];
-      LatLng latLng = LatLng(lat, lng);
-      Marker marker = Marker(
-        markerId: MarkerId(name),
-        position: latLng,
-        infoWindow: InfoWindow(title: name, snippet: address),
-      );
-      setState(() {
-        _markers.add(marker);
-      });
-    });
+    _searchNearbyPlaces(widget.initialPosition);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine Shop Locator'),
+        title: Text('Nearby Places'),
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            onMapCreated: (GoogleMapController controller) {
-              _mapController = controller;
-            },
-            initialCameraPosition: CameraPosition(
-              target: LatLng(0, 0),
-              zoom: 10,
-            ),
-            markers: _markers,
-          ),
-          Positioned(
-            bottom: 16,
-            right: 16,
-            child: FloatingActionButton(
-              onPressed: _searchNearbyMedicineShops,
-              child: Icon(Icons.search),
-            ),
-          ),
-        ],
+      body: GoogleMap(
+        initialCameraPosition:
+        CameraPosition(target: widget.initialPosition, zoom: 15),
+        onMapCreated: _onMapCreated,
+        markers: _markers.toSet(),
       ),
     );
   }
 }
-
-

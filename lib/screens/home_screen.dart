@@ -7,8 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 import '../utils/app_style.dart';
+import 'calender_page.dart';
 import 'chatai.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -125,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Spacer(),
                 InkWell(
-                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>EventCalendarScreen()));},
+                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CalendarPage()));},
                   child: Container(
                     height: 170,
                     width: MediaQuery.of(context).size.width/2-20,
@@ -148,30 +151,30 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: InkWell(
-          //     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>MedicineShopLocator()));},
-          //     child: Container(
-          //       height: 170,
-          //       width: MediaQuery.of(context).size.width/2-20,
-          //       decoration: BoxDecoration(
-          //           color: Colors.redAccent,
-          //           borderRadius: BorderRadius.circular(30)
-          //       ),
-          //       child: Center(child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           Icon(Icons.upload),
-          //           SizedBox(height: 10,),
-          //           Text(
-          //             "Upload your Prescription",style: Styles.headlineStyle3.copyWith(color: Colors.black),
-          //           ),
-          //         ],
-          //       ),),
-          //     ),
-          //   ),
-          // ),
+          Padding(
+           padding: const EdgeInsets.all(16.0),
+            child: InkWell(
+               onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>NearbyPlacesScreen(initialPosition: const LatLng(26.732311,88.410286), Latlng: null,)));},
+               child: Container(
+                 height: 170,
+                 width: MediaQuery.of(context).size.width/2-20,
+                 decoration: BoxDecoration(
+                     color: Colors.redAccent,
+                     borderRadius: BorderRadius.circular(30)
+                 ),
+                 child: Center(child: Column(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     Icon(Icons.upload),
+                     SizedBox(height: 10,),
+                     Text(
+                       "Check your Nearby Stores",style: Styles.headlineStyle3.copyWith(color: Colors.black),
+                     ),
+                   ],
+                 ),),
+               ),
+             ),
+           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: InkWell(
